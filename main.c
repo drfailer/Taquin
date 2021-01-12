@@ -9,6 +9,7 @@ typedef struct parametre {
   int number;
   int spacing;
   int window;
+  int replay;
 } parametre;
 
 // Récupération des touches avec la sdl :
@@ -83,7 +84,7 @@ int main(int argc, char *argv[])
   int i;
   int taille = 0;
   int mainbool = 1;
-  parametre p = {0, 1, 0};
+  parametre p = {0, 1, 0, 0};
   int test_victoire = 0;
   SDL_Surface *image = NULL;
   SDL_Surface *screen = NULL;
@@ -96,6 +97,7 @@ int main(int argc, char *argv[])
     printf("Entrez une taille pour la génération aléatoire:\n");
     scanf("%d", &taille);
     map = creaAlea(taille);
+    map->nbrCoup = 0;
   }
   if(map == NULL) {
     fprintf(stderr, "Error: map\n");
@@ -122,6 +124,9 @@ int main(int argc, char *argv[])
     fprintf(stderr, "Error: can't open image\n%s\n", SDL_GetError());
     exit(0);
   }
+  if (image->h < 300 && image->w < 600) {
+    fprintf(stderr, "Error: wrong image size");
+  }
   screen = SDL_SetVideoMode(image->w + map->taille, image->h + map->taille, 32, SDL_HWSURFACE);
   if (screen == NULL){
     fprintf(stderr, "Error: screen\n%s\n", SDL_GetError());
@@ -130,7 +135,7 @@ int main(int argc, char *argv[])
 
   // Affiche écran de début :
   mainbool = affiche_ecran_debut(screen, image->w, image->h);
-
+ 
   while (mainbool) {
     if (!p.window)
       affichage(screen, image, map, p.spacing, p.number);
