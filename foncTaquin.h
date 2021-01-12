@@ -10,6 +10,8 @@ typedef struct taquin
   int posCaseVide;
   // La taille de notre taquin.
   int taille;
+  // Le nombre de coup jusqu'ici.
+  int nbrCoup;
   
 } taquin;
 

@@ -47,6 +47,9 @@ void sauvegarde(taquin t)
 	  fputc('\n',f);
 	}
     }
+  //Puis on écrit le nombre de coup.
+  fprintf(f,"%d",t.nbrCoup);
+  fputc('\n',f);
   fclose(f);
 }
 
@@ -112,6 +115,9 @@ taquin * allocTaquin(char * fichier)
 	  monTaquin->posCaseVide = i;
 	}
     }
+
+  // Et le nombre De coup.
+  fscanf(f,"%d",&monTaquin->nbrCoup);
   
   fclose(f);
   return(monTaquin);
@@ -128,6 +134,7 @@ void Deplacement(char c,taquin * t)
   // On regarde quel mouvement le joueur veut faire et on regarde si c'est possible
   if(c == 'b' && posCaseVide < taille*taille-taille)
     {
+      t->nbrCoup += 1;
       tempo = t->tab[posCaseVide/taille][posCaseVide%taille];
       t->tab[posCaseVide/taille][posCaseVide%taille] = t->tab[posCaseVide/taille+1][posCaseVide%taille];
       t->tab[posCaseVide/taille+1][posCaseVide%taille] = tempo;	
@@ -135,6 +142,7 @@ void Deplacement(char c,taquin * t)
     }
   else if (c == 'h' && posCaseVide >= taille)
     {
+      t->nbrCoup += 1;
       tempo = t->tab[posCaseVide/taille][posCaseVide%taille];
       t->tab[posCaseVide/taille][posCaseVide%taille] = t->tab[posCaseVide/taille-1][posCaseVide%taille];
       t->tab[posCaseVide/taille-1][posCaseVide%taille] = tempo;
@@ -142,6 +150,7 @@ void Deplacement(char c,taquin * t)
     }
   else if (c == 'd' && posCaseVide % taille != taille-1)
     {
+      t->nbrCoup += 1;
       tempo = t->tab[posCaseVide/taille][posCaseVide%taille];
       t->tab[posCaseVide/taille][posCaseVide%taille] = t->tab[posCaseVide/taille][posCaseVide%taille+1];
       t->tab[posCaseVide/taille][posCaseVide%taille+1] = tempo;
@@ -149,6 +158,7 @@ void Deplacement(char c,taquin * t)
     }
   else if (c == 'g' && posCaseVide % taille != 0)
     {
+      t->nbrCoup += 1;
       tempo = t->tab[posCaseVide/taille][posCaseVide%taille];
       t->tab[posCaseVide/taille][posCaseVide%taille] = t->tab[posCaseVide/taille][posCaseVide%taille-1];
       t->tab[posCaseVide/taille][posCaseVide%taille-1] = tempo;
@@ -208,7 +218,6 @@ taquin * creaAlea(int taille)
     }
   return(t);
 }
-
 int testVictoire(taquin t)
 {
   // On regarde si à la case 0 on à 1, case 1 on à 2 ... dernière case -1.
@@ -217,6 +226,7 @@ int testVictoire(taquin t)
     { 
       if (t.tab[i/t.taille][i%t.taille]-1 != i)
 	{
+	  
 	  return 0;
 	}	
     }
