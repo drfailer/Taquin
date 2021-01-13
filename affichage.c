@@ -82,8 +82,8 @@ void affiche_sauvgarde(SDL_Surface *screen, taquin *map) {
 
   SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 30, 33, 39));
   
-  // Collage de l'image avec le texte de victoire :
-  text_pos.y = (screen->h - texte->h)/2 - 18;
+  // Affiche le texte :
+  text_pos.y = (screen->h - texte->h)/2 + 140;
   text_pos.x = (screen->w - texte->w)/2;
   SDL_BlitSurface(texte, NULL, screen, &text_pos);
 
