@@ -40,11 +40,23 @@ int affiche_ecran_debut(SDL_Surface *screen) {
     fprintf(stderr, "%s\n", SDL_GetError());
     exit(0);
   }
-  text_pos.y = (screen->h - texte->h)/2;
+  text_pos.y = (screen->h - texte->h)/2 + 200;
   text_pos.x = (screen->w - texte->w)/2;
   
   SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 30, 33, 39));
   SDL_BlitSurface(texte, NULL, screen, &text_pos);
+
+  // Affichage du logo :
+  texte = SDL_LoadBMP("./img/Doom_Logo.bmp");
+  if (texte == NULL) {
+    fprintf(stderr, "%s\n", SDL_GetError());
+    exit(0);
+  }
+  text_pos.y = (screen->h - texte->h)/4;
+  text_pos.x = (screen->w - texte->w)/2;
+  SDL_SetColorKey(texte, SDL_SRCCOLORKEY, SDL_MapRGB(texte->format, 255, 255, 255));
+  SDL_BlitSurface(texte, NULL, screen, &text_pos);
+
   SDL_Flip(screen);
   output = attend_touche();
 
@@ -74,6 +86,18 @@ void affiche_sauvgarde(SDL_Surface *screen, taquin *map) {
   text_pos.y = (screen->h - texte->h)/2 - 18;
   text_pos.x = (screen->w - texte->w)/2;
   SDL_BlitSurface(texte, NULL, screen, &text_pos);
+
+  // Affichage du logo :
+  texte = SDL_LoadBMP("./img/Doom_Logo.bmp");
+  if (texte == NULL) {
+    fprintf(stderr, "%s\n", SDL_GetError());
+    exit(0);
+  }
+  text_pos.y = (screen->h - texte->h)/4;
+  text_pos.x = (screen->w - texte->w)/2;
+  SDL_SetColorKey(texte, SDL_SRCCOLORKEY, SDL_MapRGB(texte->format, 255, 255, 255));
+  SDL_BlitSurface(texte, NULL, screen, &text_pos);
+  
   SDL_Flip(screen);
 
   while (bool) {
@@ -118,7 +142,7 @@ void affichage(SDL_Surface * screen, SDL_Surface * image, taquin *map, int spaci
   TTF_Font *police = NULL;
   SDL_Color color = {0, 0, 0, 255};
   if (number) {
-    police = TTF_OpenFont("/usr/share/fonts/truetype/freefont/FreeMonoBold.ttf", 10);
+    police = TTF_OpenFont("/usr/share/fonts/truetype/freefont/FreeMonoBold.ttf", 15);
     if (police == NULL) {
       fprintf(stderr, "Error: %s\n", TTF_GetError());
     }
@@ -133,8 +157,8 @@ void affichage(SDL_Surface * screen, SDL_Surface * image, taquin *map, int spaci
       if (map->tab[i][j] != -1) {
 	
 	// Position de la partie de l'image à blitter sur l'écran :
-	pos_on_screen.x = j * w + spacing*j;
-	pos_on_screen.y = i * h + spacing*i;
+	pos_on_screen.x = j * w + spacing*j + (screen->w - image->w)/2;
+	pos_on_screen.y = i * h + spacing*i + (screen->w - image->w)/4;
 	// Partie de l'image à blitter :
 	pos_on_image.x = ((map->tab[i][j] - 1)%map->taille) * w;
 	pos_on_image.y = ((map->tab[i][j] - 1)/map->taille) * h;
@@ -172,11 +196,23 @@ void affiche_menu_aide(SDL_Surface *screen) {
     fprintf(stderr, "%s\n", SDL_GetError());
     exit(0);
   }
-  text_pos.y = (screen->h - texte->h)/2;
+  text_pos.y = (screen->h - texte->h)/2 + 150;
   text_pos.x = (screen->w - texte->w)/2;
   
   SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 30, 33, 39));
   SDL_BlitSurface(texte, NULL, screen, &text_pos);
+
+  // Affichage du logo :
+  texte = SDL_LoadBMP("./img/Doom_Logo.bmp");
+  if (texte == NULL) {
+    fprintf(stderr, "%s\n", SDL_GetError());
+    exit(0);
+  }
+  text_pos.y = (screen->h - texte->h)/4;
+  text_pos.x = (screen->w - texte->w)/2;
+  SDL_SetColorKey(texte, SDL_SRCCOLORKEY, SDL_MapRGB(texte->format, 255, 255, 255));
+  SDL_BlitSurface(texte, NULL, screen, &text_pos);
+  
   SDL_Flip(screen);
 
   SDL_FreeSurface(texte);
@@ -210,16 +246,28 @@ void affiche_fin(SDL_Surface *screen, int nb_coup) {
   SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 30, 33, 39));
   
   // Collage de l'image avec le texte de victoire :
-  text_pos.y = (screen->h - texte->h)/2 - 18;
+  text_pos.y = (screen->h - texte->h)/2 + 122;
   text_pos.x = (screen->w - texte->w)/2;
   SDL_BlitSurface(texte, NULL, screen, &text_pos);
 
   // Ajout du nombre de coups :
-  text_pos.y = (screen->h - texte->h)/2 + texte->h;
+  text_pos.y = (screen->h - texte->h)/2 + texte->h + 140;
   texte = TTF_RenderText_Blended(police, nb_coup_str, color);
   text_pos.x = (screen->w - texte->w)/2;
   SDL_BlitSurface(texte, NULL, screen, &text_pos);
   
+  
+  texte = SDL_LoadBMP("./img/Doom_Logo.bmp");
+  if (texte == NULL) {
+    fprintf(stderr, "%s\n", SDL_GetError());
+    exit(0);
+  }
+  text_pos.y = (screen->h - texte->h)/4;
+  text_pos.x = (screen->w - texte->w)/2;
+  SDL_SetColorKey(texte, SDL_SRCCOLORKEY, SDL_MapRGB(texte->format, 255, 255, 255));
+  SDL_BlitSurface(texte, NULL, screen, &text_pos);
+
+
   SDL_Flip(screen);
   attend_touche();
   

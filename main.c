@@ -114,12 +114,13 @@ int main(int argc, char *argv[])
     exit(0);
   }
 
-  // TODO: window name and icon :
-  SDL_WM_SetCaption("taquin", NULL);
+  // Option de fenêtres :
+  SDL_WM_SetCaption("DOOM Taquin", NULL);
+  SDL_WM_SetIcon(SDL_LoadBMP("./img/Doom_logo.bmp"), NULL);
 
   
   // Initialisation des surfaces :
-  image = SDL_LoadBMP("./img/cat.bmp");
+  image = SDL_LoadBMP("./img/doom.bmp");
   if (image == NULL){
     fprintf(stderr, "Error: can't open image\n%s\n", SDL_GetError());
     exit(0);
@@ -127,7 +128,7 @@ int main(int argc, char *argv[])
   if (image->h < 300 && image->w < 600) {
     fprintf(stderr, "Error: wrong image size");
   }
-  screen = SDL_SetVideoMode(image->w + map->taille, image->h + map->taille, 32, SDL_HWSURFACE);
+  screen = SDL_SetVideoMode(1000, 800, 32, SDL_HWSURFACE);
   if (screen == NULL){
     fprintf(stderr, "Error: screen\n%s\n", SDL_GetError());
     exit(0);
