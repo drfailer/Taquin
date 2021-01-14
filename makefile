@@ -1,12 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -Wextra
-EXEC = taquin
+EXEC = main
 SRC= $(wildcard *.c)
 OBJ= $(SRC:.c=.o)
 
-all : $(EXEC)
+all = $(EXEC)
 
-prog: $(OBJ)	
+prog : $(OBJ)	
 	$(CC) -o $@ $^ `sdl-config --cflags --libs` -lSDL_ttf
 
 

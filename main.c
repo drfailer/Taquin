@@ -3,6 +3,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include "foncTaquin.h"
+#include "resolutionTaquin.h"
 #include "affichage.h"
 
 typedef struct parametre {
@@ -13,7 +14,8 @@ typedef struct parametre {
 } parametre;
 
 // Récupération des touches avec la sdl :
-int recup_touch(taquin *map, int *test_victoire, parametre *p) {
+int recup_touch(taquin *map, int *test_victoire, parametre *p,SDL_Surface * image,SDL_Surface * ecran)
+{
   int output = 1;
   SDL_Event evenement;
   SDL_WaitEvent(&evenement);
@@ -38,16 +40,16 @@ int recup_touch(taquin *map, int *test_victoire, parametre *p) {
       Deplacement('g', map);
       break;
     case SDLK_UP:
-      Deplacement('b', map);
-      break;
-    case SDLK_DOWN:
       Deplacement('h', map);
       break;
+    case SDLK_DOWN:
+      Deplacement('b', map);
+      break;
     case SDLK_LEFT:
-      Deplacement('d', map);
+      Deplacement('g', map);
       break;
     case SDLK_RIGHT:
-      Deplacement('g', map);
+      Deplacement('d', map);
       break;
 
       // Autres :
@@ -59,7 +61,9 @@ int recup_touch(taquin *map, int *test_victoire, parametre *p) {
       break;
     case SDLK_s:
       p->spacing = (p->spacing)? 0:1;
-      break;      
+      break;
+    case SDLK_r:
+      resolution(map,image,ecran,p->spacing,p->number);
     case SDLK_t:
       *test_victoire = testVictoire(*map);
       if (*test_victoire)
@@ -142,7 +146,7 @@ int main(int argc, char *argv[])
       affichage(screen, image, map, p.spacing, p.number);
     else
       affiche_menu_aide(screen);
-    mainbool = recup_touch(map, &test_victoire, &p);
+    mainbool = recup_touch(map, &test_victoire, &p,image,screen);
   }
 
   // Ecran de fin :

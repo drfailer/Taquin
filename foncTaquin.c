@@ -203,7 +203,7 @@ taquin * creaAlea(int taille)
   t->tab[taille-1][taille-1] = -1;
 
   // Puis on le mélange  un certain nombre de fois.
-  int nbr = rand()%(10<<taille);
+  int nbr = 20<<taille;
   int alea = 0;
   for (int i = 0;i<nbr;i++)
     {
