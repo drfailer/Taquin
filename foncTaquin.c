@@ -202,7 +202,7 @@ taquin * creaAlea(int taille)
   
   t->tab[taille-1][taille-1] = -1;
 
-  // Puis on le mélange  un certain nombre de fois.
+  // Puis on le mélange  un certain nombre de fois. (vu qu'on mélange beaucoup lorsque la taille est grande au dessus d'une dimension de 28. plus aucun mélange n'est fait).
   int nbr = 20<<taille;
   int alea = 0;
   for (int i = 0;i<nbr;i++)
